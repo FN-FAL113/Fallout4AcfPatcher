@@ -96,26 +96,38 @@ namespace Fallout4AcfPatcher.ViewModel
         {
             if (FilePath == null)
             {
-                MessageBox.Show("Please select an ACF file first", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Application.Current.MainWindow, "Please select an ACF file first", "", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 return;
             }
 
             if (!File.Exists(FilePath))
             {
-                MessageBox.Show("Given file path doesn't exist", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Application.Current.MainWindow, "Given file path doesn't exist", "", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             try
             {
                 // Copy the file, overwriting if it already exists
                 File.Copy(FilePath, FilePath + ".bak_" + DateTimeOffset.Now.ToUnixTimeSeconds(), true);
-                MessageBox.Show("A backup of your ACF file has been created in the same directory. " + Environment.NewLine +
-                    "To restore backup file, please remove the file extention suffix (.bak_<timestamp>).");
+                MessageBox.Show(
+                    Application.Current.MainWindow,
+                    "A backup of your ACF file has been created in the same directory. " + Environment.NewLine +
+                    "To restore backup file, please remove the file extention suffix (.bak_<timestamp>).",
+                    "",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                 );
             }
             catch (IOException ex)
             {
-                MessageBox.Show($"An error occurred during file copy: {ex.Message}");
+                MessageBox.Show(
+                    Application.Current.MainWindow, 
+                    $"An error occurred during file copy: {ex.Message}",
+                    "",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
 
             // Read ACF file content
@@ -150,10 +162,22 @@ namespace Fallout4AcfPatcher.ViewModel
             }
             catch (UnauthorizedAccessException ex)
             {
-                MessageBox.Show($"An error occured while updating acf file contents: {ex.Message}");
+                MessageBox.Show(
+                    Application.Current.MainWindow,
+                    $"An error occured while updating acf file contents: {ex.Message}",
+                    "",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
 
-            MessageBox.Show("ACF File Successfully Patched! Please Restart Steam");
+            MessageBox.Show(
+                Application.Current.MainWindow,
+                "ACF File Successfully Patched! Please Restart Steam",
+                "",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
         }
 
         public bool CanExecutePatchAcfFile(Object obj)
