@@ -17,6 +17,9 @@ People are getting tired of Bethesda breaking modlists with unnecessary updates.
 ## 📷 Screenshot
 <img width="500" height="250" alt="image" src="https://github.com/user-attachments/assets/acde9a73-d6f5-4871-b43d-2a827c8a56aa" />
 
+## Demo
+[![Watch the video](https://img.youtube.com/vi/gqJ0-12PkV8/0.jpg)](https://youtu.be/gqJ0-12PkV8)
+
 ## ⚙️ Requirements
 - Windows 10/11
 - [.Net 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-9.0.307-windows-x64-installer)
