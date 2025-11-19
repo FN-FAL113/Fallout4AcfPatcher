@@ -1,0 +1,204 @@
+﻿<Window x:Class="Fallout4AcfPatcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Fallout4AcfPatcher" xmlns:viewmodel="clr-namespace:Fallout4AcfPatcher.ViewModel" 
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Width="500"
+        Height="250"
+        MinWidth="500"
+        MinHeight="250"
+        MaxWidth="500"
+        MaxHeight="250"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
+        Icon="/assets/vault-boy.ico"
+        Title="MainWindow">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="0"
+            GlassFrameThickness="0"
+            ResizeBorderThickness="8" />
+    </WindowChrome.WindowChrome>
+
+    <Border
+        Background="#373B78"
+        BorderBrush="#12FFFFFF"
+        BorderThickness="0.10">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <!-- Nav Bar -->
+                <RowDefinition Height="20" />
+                <!-- Main Content -->
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!-- Nav Bar -->
+            <Grid Grid.Row="0" Background="#373B78">
+                <StackPanel
+                        Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                    <Button
+                            Name="minimizeBtn"
+                            Width="20"
+                            Height="20"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Click="minimizeBtn_Click"
+                            Content="_"
+                            FontSize="14"
+                            Foreground="white"
+                            Style="{StaticResource BtnStyle}" />
+                    <Button
+                            Name="closeBtn"
+                            Width="20"
+                            Height="20"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Click="closeBtn_Click"
+                            Content="X"
+                            FontSize="14"
+                            Foreground="PaleVioletRed"
+                            Style="{StaticResource CloseBtnStyle}" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Main Content -->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <!-- Header -->
+                    <RowDefinition Height="60"></RowDefinition>
+                    <!-- Content -->
+                    <RowDefinition></RowDefinition>
+                    <!-- Footer -->
+                    <RowDefinition Height="32"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock 
+                        Text="Fallout 4 ACF Patcher" 
+                        FontSize="20" 
+                        FontWeight="SemiBold"
+                        Foreground="White" 
+                        TextAlignment="Center" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Text="Automated Steam Manifest Patch Tool" 
+                        FontSize="14" 
+                        Foreground="White" 
+                        TextAlignment="Center" />
+                </Grid>
+
+                <!-- Content -->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <!-- File Browser -->
+                        <RowDefinition></RowDefinition>
+                        <!-- Patch Button -->
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!-- File Browser -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="170"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Text="{Binding FilePath, Mode=TwoWay}" 
+                                 IsReadOnly="True"
+                                 Width="280" 
+                                 Height="24" 
+                                 HorizontalAlignment="Right" 
+                                 Margin="8" />
+
+                        <Button Grid.Column="1"
+                                Command="{Binding FileBrowserCommand}"
+                                Content="Locate ACF File" 
+                                BorderBrush="Transparent"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Width="100" 
+                                Height="26">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Background" Value="DarkMagenta"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+
+                    <!-- Patch Button -->
+                    <Grid Grid.Row="1">
+                        <Button 
+                            Command="{Binding PatchAcfCommand}"
+                            Content="Patch" 
+                            FontWeight="Bold"
+                            FontSize="16"
+                            BorderBrush="Transparent"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Width="180"
+                            Height="36">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Background" Value="DarkSeaGreen"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Button 
+                        Click="Button_Click"
+                        BorderBrush="Transparent" 
+                        Background="Transparent" 
+                        Width="38" 
+                        Height="38" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Right">
+                        <Image
+                            Width="28" 
+                            Height="28" 
+                            Source="/assets/github.png"
+                            VerticalAlignment="Center"
+                            Margin="4" />
+                    </Button>
+                </Grid>
+            </Grid>
+
+            <Canvas Panel.ZIndex="-1">
+                <Image
+                    Opacity="0.5"
+                    Canvas.Left="11"
+                    Canvas.Top="22"
+                    Width="132"
+                    Source="/assets/vault-boy.png" />
+            </Canvas>
+        </Grid>
+    </Border>
+</Window>

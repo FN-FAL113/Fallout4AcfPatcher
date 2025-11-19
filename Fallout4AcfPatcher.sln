@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fallout4AcfPatcher", "Fallout4AcfPatcher\Fallout4AcfPatcher.csproj", "{A66E1485-3E94-4DBA-9B25-20DA11C9FEAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A66E1485-3E94-4DBA-9B25-20DA11C9FEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A66E1485-3E94-4DBA-9B25-20DA11C9FEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A66E1485-3E94-4DBA-9B25-20DA11C9FEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A66E1485-3E94-4DBA-9B25-20DA11C9FEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BDDDBBF8-E057-457D-9099-33080C67CE70}
+	EndGlobalSection
+EndGlobal

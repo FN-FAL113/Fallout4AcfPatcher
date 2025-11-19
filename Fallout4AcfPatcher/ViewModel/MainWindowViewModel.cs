@@ -1,0 +1,171 @@
+﻿using Fallout4AcfPatcher.Commands;
+using Microsoft.Win32;
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using System.Windows;
+
+namespace Fallout4AcfPatcher.ViewModel
+{
+    class MainWindowViewModel: INotifyPropertyChanged
+    {
+        public RelayCommand FileBrowserCommand { get; set; }
+        
+        public RelayCommand PatchAcfCommand { get; set; }
+
+        public string? filepath;
+        public string? FilePath { 
+            get 
+            { 
+                return filepath; 
+            } 
+            set 
+            {
+                filepath = value;
+
+                OnPropertyChanged();
+            } 
+        }
+
+        public readonly Dictionary<string, string> acfMetadataDict = new Dictionary<string, string>
+        {
+            { "StateFlags", "4" },
+            { "LastUpdated", "1575538257" },
+            { "StagingSize", "0" },
+            { "buildid", "14349213" },
+            { "LastOwner", "76561197994992501" },
+            { "UpdateResult", "0" },
+            { "BytesToDownload", "0" },
+            { "BytesDownloaded", "0" },
+            { "BytesToStage", "0" },
+            { "BytesStaged", "0" },
+            { "TargetBuildID", "0" },
+            { "AutoUpdateBehavior", "1" },
+            { "AllowOtherDownloadsWhileRunning", "0" },
+            { "ScheduledAutoUpdate", "0" },
+        };
+
+        // Since steamdb cannot be scraped and steam api has a risk of api key leakage
+        // This will be manually updated instead from time to time if necessary
+        public readonly Dictionary<int, string> depotDict = new Dictionary<int, string>
+        {
+            { 377161, "6246829985224805132" },
+            { 377162, "1553582618043813733" },
+            { 377163, "7190343975136138465" },
+            { 377164, "8492427313392140315" },
+            { 435870, "1213339795579796878" },
+            { 435871, "4263281806215530015" },
+            { 435880, "83148599833618977" },
+            { 435881, "1207717296920736193" },
+            { 435882, "8482181819175811242" },
+            { 480630, "5527412439359349504" },
+            { 480631, "6588493486198824788" },
+            { 393885, "5000262035721758737" },
+            { 490650, "4873048792354485093" },
+            { 393895, "7677765994120765493" },
+        };
+
+        public MainWindowViewModel()
+        {
+            FileBrowserCommand = new RelayCommand(ExecuteFileBrowser, CanExecuteFileBrowser);
+            PatchAcfCommand = new RelayCommand(ExecutePatchAcfFile, CanExecutePatchAcfFile);
+        }
+
+        public void ExecuteFileBrowser(Object obj)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "Acf file (*.acf)|*.acf";
+
+            bool? result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                FilePath = openFileDialog.FileName;
+                
+            }
+        }
+
+        public bool CanExecuteFileBrowser(Object obj)
+        {
+            return true;
+        }
+
+        public void ExecutePatchAcfFile(Object obj)
+        {
+            if (FilePath == null)
+            {
+                MessageBox.Show("Please select an ACF file first", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                return;
+            }
+
+            if (!File.Exists(FilePath))
+            {
+                MessageBox.Show("Given file path doesn't exist", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            try
+            {
+                // Copy the file, overwriting if it already exists
+                File.Copy(FilePath, FilePath + ".bak_" + DateTimeOffset.Now.ToUnixTimeSeconds(), true);
+                MessageBox.Show("A backup of your ACF file has been created in the same directory. " + Environment.NewLine +
+                    "To restore backup file, please remove the file extention suffix (.bak_<timestamp>).");
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"An error occurred during file copy: {ex.Message}");
+            }
+
+            // Read ACF file content
+            String acfContent = File.ReadAllText(FilePath);
+
+            // Update ACF file content metadata
+            foreach (KeyValuePair<string, string> entry in acfMetadataDict)
+            {
+                acfContent = Regex.Replace(
+                    acfContent,
+                    $"\"{entry.Key}\"\\s*\"(\\d+)\"",
+                    m => m.Value.Replace(m.Groups[1].Value, entry.Value)
+                );
+            }
+
+            // Update ACF file content depot data
+            foreach (KeyValuePair<int, string> entry in depotDict)
+            {
+                acfContent = Regex.Replace(
+                    acfContent,
+                   $"\"{entry.Key}\"\\s*{{[\\s\\S]*?\"manifest\"\\s*\"(\\d+)\"",
+                   m => m.Value.Replace(m.Groups[1].Value, entry.Value)
+                 );
+            }
+
+            // Write updated content to ACF file
+            try
+            {
+                new FileInfo(FilePath).IsReadOnly = false;
+                File.WriteAllText(FilePath, acfContent);
+                new FileInfo(FilePath).IsReadOnly = true;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show($"An error occured while updating acf file contents: {ex.Message}");
+            }
+
+            MessageBox.Show("ACF File Successfully Patched! Please Restart Steam");
+        }
+
+        public bool CanExecutePatchAcfFile(Object obj)
+        {
+            return true;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string property = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+    }
+}
