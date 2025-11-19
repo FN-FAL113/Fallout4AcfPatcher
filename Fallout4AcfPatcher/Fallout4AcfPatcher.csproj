@@ -8,6 +8,7 @@
     <UseWPF>true</UseWPF>
     <Authors>FN-FAL113</Authors>
     <ApplicationIcon>assets\vault-boy.ico</ApplicationIcon>
+    <PackageProjectUrl>https://github.com/FN-FAL113/Fallout4AcfPatcher</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
