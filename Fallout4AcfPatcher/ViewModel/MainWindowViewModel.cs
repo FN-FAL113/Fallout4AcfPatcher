@@ -46,8 +46,10 @@ namespace Fallout4AcfPatcher.ViewModel
             { "ScheduledAutoUpdate", "0" },
         };
 
-        // Since steamdb cannot be scraped and steam api has a risk of api key leakage
-        // This will be manually updated instead from time to time if necessary
+        // Since steamdb cannot be scraped due to anti-bot measures
+        // Steam api has a risk of api key leakage unless api calls are made on a secure server
+        // Steam api for game depot data also requires steam game publisher api key (not easily obtainable)
+        // This will be manually updated instead if necessary, not that tedious but requires a new build
         public readonly Dictionary<int, string> depotDict = new Dictionary<int, string>
         {
             { 377161, "6246829985224805132" },
