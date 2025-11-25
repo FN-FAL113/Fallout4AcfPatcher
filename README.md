@@ -19,7 +19,7 @@ People are getting tired of Bethesda breaking modlists with unnecessary updates.
 - [.Net 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-9.0.307-windows-x64-installer)
 
 ## 📷 Screenshot
-<img width="500" height="250" alt="image" src="https://github.com/user-attachments/assets/acde9a73-d6f5-4871-b43d-2a827c8a56aa" />
+<img width="500" height="250" alt="image" src="https://github.com/user-attachments/assets/f7334770-df2b-48cd-88c1-6a7ea440c01f" />
 
 ## 📹 Demo
 [![Watch the video](https://img.youtube.com/vi/gqJ0-12PkV8/0.jpg)](https://youtu.be/gqJ0-12PkV8)

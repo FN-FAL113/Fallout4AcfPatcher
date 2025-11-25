@@ -28,7 +28,7 @@ namespace Fallout4AcfPatcher.ViewModel
             } 
         }
 
-        public readonly Dictionary<string, string> acfMetadataDict = new Dictionary<string, string>
+        public readonly Dictionary<string, string> gameMetadataDict = new Dictionary<string, string>
         {
             { "StateFlags", "4" },
             { "LastUpdated", "1575538257" },
@@ -50,15 +50,15 @@ namespace Fallout4AcfPatcher.ViewModel
         // Steam api has a risk of api key leakage unless api calls are made on a secure server
         // Steam api for game depot data also requires steam game publisher api key (not easily obtainable)
         // This will be manually updated instead if necessary, not that tedious but requires a new build
-        public readonly Dictionary<int, string> depotDict = new Dictionary<int, string>
+        public readonly Dictionary<int, string> gameDepotDict = new Dictionary<int, string>
         {
             { 377161, "6246829985224805132" },
-            { 377162, "1553582618043813733" },
-            { 377163, "7190343975136138465" },
+            { 377162, "1314777104987018390" },
+            { 377163, "5408154951846236145" },
             { 377164, "8492427313392140315" },
             { 435870, "1213339795579796878" },
-            { 435871, "4263281806215530015" },
-            { 435880, "83148599833618977" },
+            { 435871, "3934677716798474753" },
+            { 435880, "1609717532261334873" },
             { 435881, "1207717296920736193" },
             { 435882, "8482181819175811242" },
             { 480630, "5527412439359349504" },
@@ -66,6 +66,31 @@ namespace Fallout4AcfPatcher.ViewModel
             { 393885, "5000262035721758737" },
             { 490650, "4873048792354485093" },
             { 393895, "7677765994120765493" },
+        };
+
+        public readonly Dictionary<string, string> creationKitMetadataDict = new Dictionary<string, string>
+        {
+            { "StateFlags", "4" },
+            { "LastUpdated", "1575538257" },
+            { "StagingSize", "0" },
+            { "buildid", "8578741" },
+            { "LastOwner", "76561197994992501" },
+            { "UpdateResult", "0" },
+            { "BytesToDownload", "0" },
+            { "BytesDownloaded", "0" },
+            { "BytesToStage", "0" },
+            { "BytesStaged", "0" },
+            { "TargetBuildID", "0" },
+            { "AutoUpdateBehavior", "1" },
+            { "AllowOtherDownloadsWhileRunning", "0" },
+            { "ScheduledAutoUpdate", "0" },
+        };
+
+        // This will be manually updated instead if necessary, not that tedious but requires a new build
+        public readonly Dictionary<int, string> creationKitDepotDict = new Dictionary<int, string>
+        {
+            { 1946161, "7144083600018745248" },
+            { 1946162, "8081669680152160458" },
         };
 
         public MainWindowViewModel()
@@ -106,11 +131,22 @@ namespace Fallout4AcfPatcher.ViewModel
             if (!File.Exists(FilePath))
             {
                 MessageBox.Show(Application.Current.MainWindow, "Given file path doesn't exist", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                return;
+            }
+
+            string fileName = Path.GetFileName(FilePath);
+
+            if (fileName != "appmanifest_377160.acf" && fileName != "appmanifest_1946160.acf")
+            {
+                MessageBox.Show(Application.Current.MainWindow, "Given file is not a Fallout 4/Creation Kit manifest file", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                return;
             }
 
             try
             {
-                // Copy the file, overwriting if it already exists
+                // Copy the file, overwriting if already exists
                 File.Copy(FilePath, FilePath + ".bak_" + DateTimeOffset.Now.ToUnixTimeSeconds(), true);
                 MessageBox.Show(
                     Application.Current.MainWindow,
@@ -135,24 +171,12 @@ namespace Fallout4AcfPatcher.ViewModel
             // Read ACF file content
             String acfContent = File.ReadAllText(FilePath);
 
-            // Update ACF file content metadata
-            foreach (KeyValuePair<string, string> entry in acfMetadataDict)
+            if (fileName == "appmanifest_377160.acf")
             {
-                acfContent = Regex.Replace(
-                    acfContent,
-                    $"\"{entry.Key}\"\\s*\"(\\d+)\"",
-                    m => m.Value.Replace(m.Groups[1].Value, entry.Value)
-                );
-            }
-
-            // Update ACF file content depot data
-            foreach (KeyValuePair<int, string> entry in depotDict)
+                acfContent = patchAcfFile(acfContent, gameMetadataDict, gameDepotDict);
+            } else
             {
-                acfContent = Regex.Replace(
-                    acfContent,
-                   $"\"{entry.Key}\"\\s*{{[\\s\\S]*?\"manifest\"\\s*\"(\\d+)\"",
-                   m => m.Value.Replace(m.Groups[1].Value, entry.Value)
-                 );
+                acfContent = patchAcfFile(acfContent, creationKitMetadataDict, creationKitDepotDict);
             }
 
             // Write updated content to ACF file
@@ -185,6 +209,31 @@ namespace Fallout4AcfPatcher.ViewModel
         public bool CanExecutePatchAcfFile(Object obj)
         {
             return true;
+        }
+
+        public string patchAcfFile(string acfContent, Dictionary<string, string> metaDataDict, Dictionary<int, string> depotDict)
+        {
+            // Update ACF file content metadata
+            foreach (KeyValuePair<string, string> entry in metaDataDict)
+            {
+                acfContent = Regex.Replace(
+                    acfContent,
+                    $"\"{entry.Key}\"\\s*\"(\\d+)\"",
+                    m => m.Value.Replace(m.Groups[1].Value, entry.Value)
+                );
+            }
+
+            // Update ACF file content depot data
+            foreach (KeyValuePair<int, string> entry in depotDict)
+            {
+                acfContent = Regex.Replace(
+                    acfContent,
+                   $"\"{entry.Key}\"\\s*{{[\\s\\S]*?\"manifest\"\\s*\"(\\d+)\"",
+                   m => m.Value.Replace(m.Groups[1].Value, entry.Value)
+                 );
+            }
+
+            return acfContent;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
