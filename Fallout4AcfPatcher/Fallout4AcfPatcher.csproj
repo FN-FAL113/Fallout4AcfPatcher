@@ -9,25 +9,27 @@
     <Authors>FN-FAL113</Authors>
     <ApplicationIcon>assets\vault-boy.ico</ApplicationIcon>
     <PackageProjectUrl>https://github.com/FN-FAL113/Fallout4AcfPatcher</PackageProjectUrl>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="assets\github.png" />
-    <None Remove="assets\vault-boy.ico" />
-    <None Remove="assets\vault-boy.png" />
+    <None Remove="Assets\github.png" />
+    <None Remove="Assets\vault-boy.ico" />
+    <None Remove="Assets\vault-boy.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="assets\github.png">
+    <Resource Include="Assets\github.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="assets\vault-boy.png">
+    <Resource Include="Assets\vault-boy.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="assets\vault-boy.ico">
+    <Resource Include="Assets\vault-boy.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
