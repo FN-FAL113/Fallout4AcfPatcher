@@ -13,6 +13,7 @@ People are getting tired of Bethesda breaking modlists with unnecessary updates.
 
 ## ⬇️ Download
 ### [Releases](https://github.com/FN-FAL113/Fallout4AcfPatcher/releases)
+### [NexusMods](https://www.nexusmods.com/fallout4/mods/98605)
 
 ## ⚙️ Requirements
 - Windows 10/11
