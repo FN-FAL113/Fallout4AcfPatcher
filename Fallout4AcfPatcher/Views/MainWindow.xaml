@@ -187,24 +187,44 @@
                              BorderBrush="Transparent"
                              HorizontalAlignment="Right" 
                              Margin="0 -8 0 0" 
+                             ToolTip="App Info"
+                             ToolTipService.InitialShowDelay="150"
                              Style="{StaticResource NoBtnHoverColor}"/>
+                        <Button 
+                            Click="Donate_Button_Click"
+                            Content="$"
+                            Width="20"
+                            FontWeight="Bold"
+                            FontSize="28"
+                            Foreground="White"
+                            BorderBrush="Transparent" 
+                            Background="Transparent" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Right"
+                            Margin="2 -8 0 0" 
+                            ToolTip="Donate with Paypal"
+                            ToolTipService.InitialShowDelay="150"
+                            Style="{StaticResource NoBtnHoverColor}">
+                        </Button>
                         <Button 
                             Click="Github_Button_Click"
                             BorderBrush="Transparent" 
                             Background="Transparent" 
-                            Width="38" 
-                            Height="38" 
+                            Width="36" 
+                            Height="32" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Right"
+                            ToolTip="Github Repository"
+                            ToolTipService.InitialShowDelay="150"
                             Style="{StaticResource NoBtnHoverColor}">
                             <Image
                                 UseLayoutRounding="True"
                                 SnapsToDevicePixels="True"
-                                Width="36" 
-                                Height="36" 
+                                Width="34" 
+                                Height="34" 
                                 Source="/Assets/github.png"
                                 VerticalAlignment="Center"
-                                Margin="0 -4 0 0" />
+                                Margin="-2 -4 0 0" />
                         </Button>
                     </StackPanel>
                 </Grid>

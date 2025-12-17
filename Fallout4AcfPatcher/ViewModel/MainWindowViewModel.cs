@@ -46,26 +46,26 @@ namespace Fallout4AcfPatcher.ViewModel
             { "ScheduledAutoUpdate", "0" },
         };
 
-        // Since steamdb cannot be scraped due to anti-bot measures
+        // Steamdb cannot be scraped due to anti-bot measures
         // Steam api has a risk of api key leakage unless api calls are made on a secure server
         // Steam api for game depot data also requires steam game publisher api key (not easily obtainable)
         // This will be manually updated instead if necessary, not that tedious but requires a new build
         public readonly Dictionary<int, string> gameDepotDict = new Dictionary<int, string>
         {
-            { 377161, "6246829985224805132" },
-            { 377162, "1314777104987018390" },
-            { 377163, "5408154951846236145" },
-            { 377164, "8492427313392140315" },
-            { 435870, "1213339795579796878" },
-            { 435871, "3934677716798474753" },
-            { 435880, "1609717532261334873" },
-            { 435881, "1207717296920736193" },
-            { 435882, "8482181819175811242" },
-            { 480630, "5527412439359349504" },
-            { 480631, "6588493486198824788" },
-            { 393885, "5000262035721758737" },
-            { 490650, "4873048792354485093" },
-            { 393895, "7677765994120765493" },
+            { 377161, "5983086794954940044" }, // Fallout 4 content_a
+            { 377162, "5433405173062582852" }, // Fallout 4.exe
+            { 377163, "8360827888850301367" }, // Fallout 4 content_b
+            { 377164, "8492427313392140315" }, // Fallout 4 english
+            { 435870, "1213339795579796878" }, // Fallout 4 - Automatron
+            { 435871, "471362073238143096" },  // Fallout 4 - Automatron english
+            { 435880, "7708996200055144433" }, // Fallout 4 - Wasteland Workshop
+            { 435881, "1207717296920736193" }, // Fallout 4 - Far Harbor
+            { 435882, "8482181819175811242" }, // Fallout 4 - Far Harbor english
+            { 480630, "5527412439359349504" }, // Fallout 4 - Contraptions Workshop
+            { 480631, "6588493486198824788" }, // Fallout 4 - Vault-Tec Workshop
+            { 393885, "5000262035721758737" }, // Fallout 4 - Vault-Tec Workshop english
+            { 490650, "4873048792354485093" }, // Fallout 4 - Nuka-World
+            { 393895, "7677765994120765493" }, // Fallout 4 - Nuka-World english
         };
 
         public readonly Dictionary<string, string> creationKitMetadataDict = new Dictionary<string, string>

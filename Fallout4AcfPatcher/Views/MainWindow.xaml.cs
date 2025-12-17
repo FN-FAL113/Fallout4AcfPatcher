@@ -47,7 +47,7 @@ public partial class MainWindow : Window
         MessageBox.Show(
             this,
             "Version: " + Environment.NewLine +
-            "1.0.1" + Environment.NewLine +
+            "1.0.2" + Environment.NewLine +
             "Supported Game Version: " + Environment.NewLine +
             "Anniversary Update" + Environment.NewLine +
             Environment.NewLine +
@@ -62,6 +62,18 @@ public partial class MainWindow : Window
             MessageBoxButton.OK,
             MessageBoxImage.Information
         );
+    }
+
+    private void Donate_Button_Click(object sender, RoutedEventArgs e)
+    {
+        // prevent other mouse event listeners from being triggered
+        e.Handled = true;
+
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = "https://www.paypal.com/paypalme/fnfal113",
+            UseShellExecute = true
+        });
     }
 
     private void Github_Button_Click(object sender, RoutedEventArgs e)
